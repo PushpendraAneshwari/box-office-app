@@ -7,7 +7,6 @@ import Navs from "./components/Navs";
 function App() {
   return (
     <div>
-      <Navs />
       <Routes>
         <Route exact path="/" element={<Home />}></Route>
         <Route exact path="/starred" element={<Starred />}></Route>
