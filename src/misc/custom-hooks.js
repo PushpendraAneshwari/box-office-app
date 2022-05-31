@@ -1,5 +1,5 @@
 /* eslint-disable default-case */
-import { useReducer, useEffect } from "react";
+import { useReducer, useEffect, useState } from "react";
 
 function showsReducer(prevState, action) {
   switch (action.type) {
@@ -32,4 +32,19 @@ function usePersistedReducer(reducer, initialState, key) {
 
 export function useShows(key = "shows") {
   return usePersistedReducer(showsReducer, [], key);
+}
+
+export function useLastQuery(key = "lastQuery") {
+  const [input, setInput] = useState(() => {
+    const persisted = sessionStorage.getItem(key);
+
+    return persisted ? JSON.parse(persisted) : "";
+  });
+
+  const setPersistedInput = (newState) => {
+    setInput(newState);
+    sessionStorage.setItem(key, JSON.stringify(newState));
+  };
+
+  return [input, setPersistedInput];
 }
